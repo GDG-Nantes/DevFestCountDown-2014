@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>CountDown ! </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/>
+	<link rel="stylesheet" media="screen" href="css/main.css">
+    
+    <link rel="shortcut icon" type="image/ico" href="assets/images/favicon.ico">
+</head>
+<body>
+    <div class="conteneur">
+        <img src="assets/images/tshirt_final_xl_sans_texte.png" id="main" />
+
+        <div class="jaune_clair min chiffre" id="min">00</div>
+        <div class="jaune_fonce min unit">m</div>
+
+        <div class="jaune_clair sec chiffre" id="sec">00</div>
+        <div class="jaune_fonce sec unit">s</div>
+
+        <!-- Codes by HTML.am -->
+        <marquee behavior="scroll" direction="right" class="marquee_1">DevFest Nantes</marquee>
+        <marquee behavior="scroll" direction="right" class="marquee_2">DevFest Nantes</marquee>
+
+
+    </div>
+    <script type="text/javascript">
+
+        var min = document.getElementById('min'),
+        sec = document.getElementById('sec'),
+        cibleDate = Date.parse('2014-11-07T08:30:00Z'), 
+        marquee_1 = document.querySelector('.marquee_1'),
+        marquee_2 = document.querySelector('.marquee_2'),
+        currentTime = new Date().getTime();
+
+        marquee_1.style.display = 'none';
+        marquee_2.style.display = 'none';
+        setTimeout(function() {
+            marquee_1.style.display = '';
+            setTimeout(function() {
+                marquee_2.style.display = '';
+            }, 2800);
+        }, 100);
+
+        var cancelInterval = setInterval(function() {
+            currentTime+=100;                    
+            var tmpDate = new Date(cibleDate - currentTime);
+            min.innerHTML = tmpDate.getMinutes() < 10 ? "0"+tmpDate.getMinutes() : tmpDate.getMinutes();
+            sec.innerHTML = tmpDate.getSeconds() < 10 ? "0"+tmpDate.getSeconds() : tmpDate.getSeconds();
+            if (cibleDate - currentTime <= 0 ){
+                cancelInterval();
+            }
+        }, 100);
+
+    </script>
+</body>
+</html>
