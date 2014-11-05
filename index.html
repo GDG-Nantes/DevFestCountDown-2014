@@ -33,7 +33,7 @@
             <div class="title">DevFest Nantes<br><br>2014<br><br><span id="press" class="green">&lt;press start&gt;</span></div>
             <div id="fakemouse"></div>
         </div>
-        <video id="iovideo" src="assets/video/video.mp4" width="100%"></video>
+        <video id="iovideo" src="assets/video/video.mp4"></video>
     </div>
     <script type="text/javascript">
 
@@ -103,6 +103,8 @@
             var devfestElt = document.getElementById('devfestnantes');
             devfestElt.classList.remove('show');
             devfestElt.classList.add('hide');
+            videoElt.width = window.innerWidth;
+	    videoElt.height = window.innerHeight;
             videoElt.play();
 
         }
