@@ -24,12 +24,21 @@
         <marquee behavior="scroll" direction="right" class="marquee_2">DevFest Nantes</marquee>
 
 
+
+    </div>
+    <div id="opacity">
+        <div id="devfestnantes">            
+            <img src="assets/images/logo.png"> 
+            <div class="title">DevFest Nantes<br><br>2014<br><br><span id="press" class="green">&lt;press start&gt;</span></div>
+            <div id="fakemouse"></div>
+        </div>
+        <video id="iovideo" src="assets/video/video.mp4" width="800px"></video>
     </div>
     <script type="text/javascript">
 
         var min = document.getElementById('min'),
         sec = document.getElementById('sec'),
-        cibleDate = Date.parse('2014-11-07T08:30:00Z'), 
+        cibleDate = new Date().getTime()+(10 * 1000),// Date.parse('2014-11-07T08:30:00Z'), 
         marquee_1 = document.querySelector('.marquee_1'),
         marquee_2 = document.querySelector('.marquee_2'),
         currentTime = new Date().getTime();
@@ -48,10 +57,48 @@
             var tmpDate = new Date(cibleDate - currentTime);
             min.innerHTML = tmpDate.getMinutes() < 10 ? "0"+tmpDate.getMinutes() : tmpDate.getMinutes();
             sec.innerHTML = tmpDate.getSeconds() < 10 ? "0"+tmpDate.getSeconds() : tmpDate.getSeconds();
-            if (cibleDate - currentTime <= 0 ){
-                cancelInterval();
+            if ((cibleDate - currentTime) <= 0 ){
+                endCountDown();
             }
         }, 100);
+
+        function endCountDown(){
+            sec.innerHTML = "00";
+            clearInterval(cancelInterval);
+            document.getElementById('opacity').classList.add('black');
+            setTimeout(afterOpacity, 4000);
+        }
+
+        function afterOpacity(){
+            document.getElementById('devfestnantes').classList.add('show');
+            setTimeout(mouveMouse, 3000);     
+        }
+
+        function mouveMouse(){
+            var fakeMouse = document.getElementById('fakemouse');
+            var press = document.getElementById('press');
+            var rectPress = press.getBoundingClientRect();
+            var rectMouse = fakeMouse.getBoundingClientRect();
+            fakeMouse.style.left = (rectPress.left + (rectPress.width / 2))+"px";
+            fakeMouse.style.bottom = (window.innerHeight - rectPress.bottom - rectMouse.height)+"px";
+            setTimeout(mouseClicked, 3000);
+        }
+
+        function mouseClicked(){
+            var fakeMouse = document.getElementById('fakemouse');
+            fakeMouse.classList.add('clicked');
+            setTimeout(startVideo, 500);
+        }
+
+        function startVideo(){
+            var videoElt = document.getElementById('iovideo');
+            videoElt.classList.add('show');
+            var devfestElt = document.getElementById('devfestnantes');
+            devfestElt.classList.remove('show');
+            devfestElt.classList.add('hide');
+            videoElt.play();
+
+        }
 
     </script>
 </body>

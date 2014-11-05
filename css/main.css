@@ -78,31 +78,30 @@ body{
 
 .min.chiffre{
   top: 280px;
-  left: 146px;
-  transform : rotateY(63deg);
+  left: 132px;
+  transform : rotateY(73deg);
 }
 
 .min.unit{
-  top:269px;
-  left: 245px;
-  transform: rotateY(-58deg);
+  top: 286px;
+  left: 241px;
+  transform: rotateY(-47deg) rotateZ(-11deg) rotateX(11deg);
 }
 
 .sec.chiffre{
-  top: 380px;
-  left: 146px;
-  transform: rotateY(-46deg) rotateZ(11deg);
+  top: 415px;
+  left: 133px;
+  transform: rotateY(73deg) rotateZ(14deg) rotateX(4deg);
 }
 
 .sec.unit{
-  top:370px;
-  left: 245px;
-  transform: rotateY(-59deg) rotateZ(-11deg);
-
+  top: 421px;
+  left: 241px;
+  transform: rotateY(47deg) rotateZ(-12deg) rotateX(-7deg);
 }
 
 .chiffre{
-  font-size: 35px;
+  font-size: 50px;
 }
 
 .unit{
@@ -137,4 +136,140 @@ body{
   height: 54px;
   line-height: 54px;
   transform: rotateY(35deg);
+}
+
+#opacity{
+  position: absolute;
+  background: black;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 5s;
+}
+
+#opacity.black{
+  opacity: 1;
+}
+
+#devfestnantes{
+  position: absolute;
+  background: black;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 2s;
+  color:white;
+}
+
+#devfestnantes.show{
+  opacity: 1;
+}
+
+#devfestnantes.hide{
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+
+#devfestnantes .title{
+  position: absolute;
+  top: 40%;
+  left: 0;
+  font-size: 4em;
+  width: 100%;
+  text-align: center;
+}
+
+#devfestnantes img{
+  position: absolute;
+  top: 0;
+  left: -100px;
+}
+
+.green{
+  color : #93C47D;
+}
+
+#fakemouse{
+  position: absolute;
+  bottom: -200px;
+  left: -200px;
+  background: url(../assets/images/fakemouse.png) no-repeat;
+  width: 50px;
+  height: 66px;
+  background-size:50px 66px;
+  transition-property: bottom, left;
+  transition-duration: 2s,2s;
+}
+
+#iovideo{
+  opacity: 0;
+  position: absolute;
+  top: 50%;
+  margin-top: -15%;
+  left: 50%;
+  margin-left: -400px;
+  width: 800px;
+  transition-property: opacity;
+  transition-duration: 0.5s;
+}
+
+#iovideo.show{
+  opacity: 1;
+}
+
+
+/*
+*  MATERIAL DESIGN
+*
+*/
+
+.clicked::after {
+  -webkit-animation: click-wave 0.65s;
+  -moz-animation: click-wave 0.65s;
+  animation: click-wave 0.65s;
+  background: #40e0d0;
+  content: '';
+  display: block;
+  position: relative;
+  z-index: 100;
+}
+/*
+.option-input.radio { border-radius: 50%; }
+
+.option-input.radio::after { border-radius: 50%; }*/
+
+@-webkit-keyframes click-wave { 
+  0% {
+   width: 40px;
+   height: 40px;
+   opacity: 0.35;
+   position: relative;
+  }
+   100% {
+   width: 200px;
+   height: 200px;
+   margin-left: -80px;
+   margin-top: -80px;
+   opacity: 0.0;
+  }
+}
+
+@keyframes click-wave { 
+  0% {
+   width: 40px;
+   height: 40px;
+   opacity: 0.35;
+   position: relative;
+  }
+ 100% {
+   width: 200px;
+   height: 200px;
+   margin-left: -80px;
+   margin-top: -80px;
+   opacity: 0.0;
+  }
 }
