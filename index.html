@@ -110,26 +110,30 @@
 
 
         function loadSound(url, bufferToUse){
-            var request = new XMLHttpRequest();
-            request.open('GET', url, true);
-            request.responseType = 'arraybuffer';
+            try{
+                var request = new XMLHttpRequest();
+                request.open('GET', url, true);
+                request.responseType = 'arraybuffer';
 
-            // Decode asynchronously
-            request.onload = function() {
-                context.decodeAudioData(request.response, function(buffer) {
-                    if (bufferToUse){
+                // Decode asynchronously
+                request.onload = function() {
+                    context.decodeAudioData(request.response, function(buffer) {
+                        if (bufferToUse){
 
-                    }else{
-                        keynoteBuffer = buffer;                    
-                    }
-                }, function(e){
-                    console.log('Error decoding file', e);
-                });
+                        }else{
+                            keynoteBuffer = buffer;                    
+                        }
+                    }, function(e){
+                        console.log('Error decoding file', e);
+                    });
+                }
+                request.send();
+            }catch(err){
+                console.error(err);
             }
-            request.send();
         }
 
-        function playSound(buffer){
+        function playSound(buffer){            
             var source = context.createBufferSource(); // creates a sound source
             source.buffer = buffer;                    // tell the source which sound to play
             source.connect(context.destination);       // connect the source to the context's destination (the speakers)
@@ -151,7 +155,12 @@
         }
 
         function playKeyNoteSound(){
-            playSound(keynoteBuffer);
+            try{
+
+                playSound(keynoteBuffer);
+            }catch(err){
+                console.error(err);
+            }
         }
 
 
