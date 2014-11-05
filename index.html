@@ -10,6 +10,7 @@
 </head>
 <body>
     <div class="bg"></div>
+    <div class="footer"></div>
     <div class="conteneur">
         <img src="assets/images/tshirt_final_xl_sans_texte.png" id="main" />
 
@@ -41,7 +42,11 @@
         cibleDate = new Date().getTime()+(10 * 1000),// Date.parse('2014-11-07T08:30:00Z'), 
         marquee_1 = document.querySelector('.marquee_1'),
         marquee_2 = document.querySelector('.marquee_2'),
-        currentTime = new Date().getTime();
+        currentTime = new Date().getTime(),
+        context = null,
+        sourceKeynote = null,
+        keynoteBuffer = null,
+        tmpBuffer = null;
 
         marquee_1.style.display = 'none';
         marquee_2.style.display = 'none';
@@ -64,6 +69,7 @@
 
         function endCountDown(){
             sec.innerHTML = "00";
+            playKeyNoteSound();
             clearInterval(cancelInterval);
             document.getElementById('opacity').classList.add('black');
             setTimeout(afterOpacity, 4000);
@@ -91,6 +97,7 @@
         }
 
         function startVideo(){
+
             var videoElt = document.getElementById('iovideo');
             videoElt.classList.add('show');
             var devfestElt = document.getElementById('devfestnantes');
@@ -99,6 +106,56 @@
             videoElt.play();
 
         }
+
+
+
+        function loadSound(url, bufferToUse){
+            var request = new XMLHttpRequest();
+            request.open('GET', url, true);
+            request.responseType = 'arraybuffer';
+
+            // Decode asynchronously
+            request.onload = function() {
+                context.decodeAudioData(request.response, function(buffer) {
+                    if (bufferToUse){
+
+                    }else{
+                        keynoteBuffer = buffer;                    
+                    }
+                }, function(e){
+                    console.log('Error decoding file', e);
+                });
+            }
+            request.send();
+        }
+
+        function playSound(buffer){
+            var source = context.createBufferSource(); // creates a sound source
+            source.buffer = buffer;                    // tell the source which sound to play
+            source.connect(context.destination);       // connect the source to the context's destination (the speakers)
+            source.start(0);                           // play the source now
+            return source;
+        }
+
+        function loadSounds(){
+            try{
+                window.AudioContext = window.AudioContext || window.webkitAudioContext;
+                context = new AudioContext();
+            }catch(e){
+                console.log("No WebAPI dectect");
+            }
+
+            loadSound('assets/songs/Porter_Robinson_-_Sea_Of_Voices_(RAC_Mix).mp3');
+
+            
+        }
+
+        function playKeyNoteSound(){
+            playSound(keynoteBuffer);
+        }
+
+
+        loadSounds();
 
     </script>
 </body>

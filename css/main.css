@@ -17,16 +17,16 @@ html, body{
 
 body{
   background: #444;
-  background: linear-gradient(to bottom, #444 0%, #4F4F4F 100%);
+  background: linear-gradient(to bottom, #444 0%, #4F4F4F 100%);  
   font-family: "Press Start 2P";
   direction: ltr;
   overflow: hidden;
   
 }
 
-.bg{
+.footer{
   position: absolute;  
-
+  display: none; /* TO REMOVE OR NOT :) */ 
   bottom: -50px;
   left: 0;
   width: 100%;
@@ -35,7 +35,7 @@ body{
   background-repeat: no-repeat;
   background-position: center; 
 }
-.bg::before, .bg::after{
+.footer::before, .footer::after{
   content: '';
   background: #464646;
   position: absolute;
@@ -43,13 +43,26 @@ body{
   width: 50%;
   height: 170px;
 }
-.bg::before{
+.footer::before{
   left: -375px;
 }
-.bg::after{
+.footer::after{
   right: -375px;
 }
 
+
+.bg{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-image: url(../assets/images/fond_technos_800.png);
+  opacity: 0.1;
+  
+}
 
 .conteneur{
   position: absolute;
@@ -62,12 +75,24 @@ body{
   margin-top: -400px;
   text-align: center;
   perspective : 500px;
-   /*display: table-cell;
-  vertical-align: middle;*/
+}
+
+.conteneur::before{
+  content: '';
+  background: #4F4F4F;
+  width: 900px;
+  height: 900px;
+  position: absolute;
+  border-radius: 450px;
+  top: -71px;
+  left: 50%;
+  margin-left: -450px;
+  box-shadow: 0px 0px 10px 10px #444 inset;
 }
 
 #main{
   height: 100%;
+  position: relative;
 }
 
 .chiffre, .unit{
@@ -136,6 +161,7 @@ body{
   height: 54px;
   line-height: 54px;
   transform: rotateY(35deg);
+  
 }
 
 #opacity{
@@ -185,8 +211,9 @@ body{
 
 #devfestnantes img{
   position: absolute;
-  top: 0;
-  left: -100px;
+  top: 50%;
+  margin-top: -469px;
+  left: -150px;
 }
 
 .green{
