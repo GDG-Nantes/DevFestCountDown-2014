@@ -181,14 +181,14 @@ body{
 
 #devfestnantes{
   position: absolute;
-  background: black;
+  background: #EFEFEF;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   opacity: 0;
   transition: opacity 2s;
-  color:white;
+  color:black;
 }
 
 #devfestnantes.show{
@@ -209,11 +209,19 @@ body{
   text-align: center;
 }
 
-#devfestnantes img{
+#devfestnantes img#logo-technos{
   position: absolute;
   top: 50%;
   margin-top: -469px;
   left: -150px;
+}
+
+#devfestnantes img#tour-bretagne{
+  position: absolute;
+  top: 50%;
+  height: 900px;
+  margin-top: -450px;
+  right: 100px;
 }
 
 .green{
@@ -235,11 +243,10 @@ body{
 #iovideo{
   opacity: 0;
   position: absolute;
-  top: 50%;
-  margin-top: -15%;
-  left: 50%;
-  margin-left: -400px;
-  width: 800px;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   transition-property: opacity;
   transition-duration: 0.5s;
 }

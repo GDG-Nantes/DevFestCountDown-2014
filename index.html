@@ -29,24 +29,33 @@
     </div>
     <div id="opacity">
         <div id="devfestnantes">            
-            <img src="assets/images/logo.png"> 
+            <img src="assets/images/logo.png" id="logo-technos"> 
             <div class="title">DevFest Nantes<br><br>2014<br><br><span id="press" class="green">&lt;press start&gt;</span></div>
             <div id="fakemouse"></div>
+            <img src="assets/images/tshirt_final_xl.png" id="tour-bretagne"> 
         </div>
-        <video id="iovideo" src="assets/video/video.mp4"></video>
+        <video id="iovideo" src="assets/video/keynote_devfest_v5.mp4" onended="endVideo();"></video>
+        <audio id="playlist" src="" style="display:none;" onended="nextSong();"></audio>
     </div>
     <script type="text/javascript">
 
         var min = document.getElementById('min'),
         sec = document.getElementById('sec'),
-        cibleDate = new Date().getTime()+(10 * 1000),// Date.parse('2014-11-07T08:30:00Z'), 
+        audioElt = document.getElementById('playlist'),
+        //cibleDate = new Date().getTime()+(20 * 1000),
+        cibleDate = Date.parse('2014-11-07T08:35:00Z'), 
         marquee_1 = document.querySelector('.marquee_1'),
         marquee_2 = document.querySelector('.marquee_2'),
         currentTime = new Date().getTime(),
-        context = null,
-        sourceKeynote = null,
-        keynoteBuffer = null,
-        tmpBuffer = null;
+        indexPlaylist = 0,
+        playListSongs = [
+            '0-Stevie_Wonder_-_Superstition_(C2C_Remix).mp3',
+            'Dimie_Cat_-_AAA_(Triple_A).mp3',
+            '1-Bea_ Assailant_-_Run_(Official_Video).mp3',
+            'Dimie_Cat_-_Le_poulpe.mp3',
+            'Klischée_-_07_Tique_Tac.mp3',
+            'Say_Yes_Dog_-_A_Friend_[Official_Video].mp3'
+        ];
 
         marquee_1.style.display = 'none';
         marquee_2.style.display = 'none';
@@ -58,18 +67,20 @@
         }, 100);
 
         var cancelInterval = setInterval(function() {
-            currentTime+=100;                    
-            var tmpDate = new Date(cibleDate - currentTime);
+            currentTime+=100;            
+            var deltaTime = cibleDate - currentTime;        
+            var tmpDate = new Date(deltaTime);
             min.innerHTML = tmpDate.getMinutes() < 10 ? "0"+tmpDate.getMinutes() : tmpDate.getMinutes();
             sec.innerHTML = tmpDate.getSeconds() < 10 ? "0"+tmpDate.getSeconds() : tmpDate.getSeconds();
-            if ((cibleDate - currentTime) <= 0 ){
+            manageSoundVolume(deltaTime);
+            if (deltaTime <= 0 ){
                 endCountDown();
             }
         }, 100);
 
         function endCountDown(){
+            min.innerHTML = "00";
             sec.innerHTML = "00";
-            playKeyNoteSound();
             clearInterval(cancelInterval);
             document.getElementById('opacity').classList.add('black');
             setTimeout(afterOpacity, 4000);
@@ -109,64 +120,34 @@
 
         }
 
+        function manageSoundVolume(delta){
+            if (delta < 10 * 1000){
+                audioElt.volume = Math.min(Math.max(0,delta / (10 * 1000)),0.5);
+            }
+        }
 
+        function playSound(url){            
+            audioElt.pause();
+            audioElt.src = url;
+            audioElt.play();
+        }
 
-        function loadSound(url, bufferToUse){
+        function nextSong(){
             try{
-                var request = new XMLHttpRequest();
-                request.open('GET', url, true);
-                request.responseType = 'arraybuffer';
-
-                // Decode asynchronously
-                request.onload = function() {
-                    context.decodeAudioData(request.response, function(buffer) {
-                        if (bufferToUse){
-
-                        }else{
-                            keynoteBuffer = buffer;                    
-                        }
-                    }, function(e){
-                        console.log('Error decoding file', e);
-                    });
-                }
-                request.send();
+                playSound("assets/songs/"+playListSongs[indexPlaylist]);
+                indexPlaylist = (indexPlaylist + 1) % playListSongs.length;
+                
             }catch(err){
                 console.error(err);
             }
         }
 
-        function playSound(buffer){            
-            var source = context.createBufferSource(); // creates a sound source
-            source.buffer = buffer;                    // tell the source which sound to play
-            source.connect(context.destination);       // connect the source to the context's destination (the speakers)
-            source.start(0);                           // play the source now
-            return source;
-        }
-
-        function loadSounds(){
-            try{
-                window.AudioContext = window.AudioContext || window.webkitAudioContext;
-                context = new AudioContext();
-            }catch(e){
-                console.log("No WebAPI dectect");
-            }
-
-            loadSound('assets/songs/Porter_Robinson_-_Sea_Of_Voices_(RAC_Mix).mp3');
-
-            
-        }
-
-        function playKeyNoteSound(){
-            try{
-
-                playSound(keynoteBuffer);
-            }catch(err){
-                console.error(err);
-            }
+        function endVideo(){
+            window.close();
         }
 
 
-        loadSounds();
+        nextSong();
 
     </script>
 </body>
