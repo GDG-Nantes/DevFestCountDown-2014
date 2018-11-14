@@ -9,6 +9,9 @@
     <link rel="shortcut icon" type="image/ico" href="assets/images/favicon.ico">
 </head>
 <body>
+    <div id="toHideButton" style="position: absolute;width:100%; height:100%;top:0;left: 0;margin:0;padding:0;display: flex; background:black; flex-direction:column; align-items:center; justify-content: center; z-index:2000;">
+        <button id="startClickMe" style="font-size:3em;">ClickMe to start</button>
+    </div>
     <div class="bg"></div>
     <div class="footer"></div>
     <div class="conteneur">
@@ -42,19 +45,14 @@
         var min = document.getElementById('min'),
         sec = document.getElementById('sec'),
         audioElt = document.getElementById('playlist'),
-        //cibleDate = new Date().getTime()+(20 * 1000),
-        cibleDate = Date.parse('2014-11-07T08:35:00Z'), 
+        cibleDate = new Date().getTime()+(30 * 1000),
+        //cibleDate = Date.parse('2014-11-07T08:35:00Z'), 
         marquee_1 = document.querySelector('.marquee_1'),
         marquee_2 = document.querySelector('.marquee_2'),
         currentTime = new Date().getTime(),
         indexPlaylist = 0,
         playListSongs = [
-            '0-Stevie_Wonder_-_Superstition_(C2C_Remix).mp3',
-            'Dimie_Cat_-_AAA_(Triple_A).mp3',
-            '1-Bea_ Assailant_-_Run_(Official_Video).mp3',
-            'Dimie_Cat_-_Le_poulpe.mp3',
-            'Klischée_-_07_Tique_Tac.mp3',
-            'Say_Yes_Dog_-_A_Friend_[Official_Video].mp3'
+            'The_Spin_Wires_-_Blackout_Romeo.mp3'
         ];
 
         marquee_1.style.display = 'none';
@@ -147,7 +145,10 @@
         }
 
 
-        nextSong();
+        document.getElementById('startClickMe').addEventListener('click', ()=>{
+            document.getElementById('toHideButton').style.display = 'none';
+            nextSong();
+        })
 
     </script>
 </body>
